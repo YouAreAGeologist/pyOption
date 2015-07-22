@@ -10,8 +10,8 @@ class VanillaOptionDistributionCalculator:
         d1 = (math.log(s/x) + (r + math.pow(sigma,2)/2) * t)/(sigma * math.sqrt(t))
         d2 = d1 - sigma * math.sqrt(t)
         if flag == 'c':
-            result = (s * cnd(d1)) - (x * math.exp(-r * t) * cnd(d2)
-        elseif flag == 'p':
+            result = (s * cnd(d1)) - (x * math.exp(-r * t) * cnd(d2))
+        elif flag == 'p':
             result = (x * math.exp(-r * t) * cnd(-d2)) - (s * cnd(-d1))
         return result
         
@@ -20,9 +20,9 @@ class VanillaOptionDistributionCalculator:
         d1 = (math.log(s/x) + (r - q + math.pow(sigma,2)/2) * t)/(sigma * math.sqrt(t))
         d2 = d1 - sigma * math.sqrt(t)
         if flag == 'c':
-            result = 0
+            result = (s * math.exp(-q*t) * cnd(d1)) - (x*math.exp(-r*t) * cnd(d2))
         elif flag == 'p':
-            result = 0
+            result = (x*math.exp(-r*t)*cnd(-d2)) - (s*math.exp(-q*t)*cnd(-d1))
         return result
         
     def getOptionOnFuturesPrice():
