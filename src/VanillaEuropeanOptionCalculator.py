@@ -26,14 +26,18 @@ class VanillaOptionDistributionCalculator:
         return result
         
     def getOptionOnFuturesPrice(flag,f,x,k,r,t,sigma):
-        result = None
-        d1 = (math.log(f/x) + (math.pow(sigma,2)/2) * t)/(sigma * math.sqrt(t))
-        d2 = d1 - sigma * math.sqrt(t)
-        return result
+       result = None
+       
+       return result
         
     def getCurrencyOptionPrice():
         result = None
-        
+        d1 = (math.log(f/x) + (math.pow(sigma,2)/2) * t)/(sigma * math.sqrt(t))
+        d2 = d1 - sigma * math.sqrt(t)
+        if flag == 'c':
+            result = 0
+        elif flag = 'p':
+            ressult = 0
         return result
         
     # Greeks implementations for equity and fx options
