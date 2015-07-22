@@ -25,9 +25,10 @@ class VanillaOptionDistributionCalculator:
             result = (x*math.exp(-r*t)*cnd(-d2)) - (s*math.exp(-q*t)*cnd(-d1))
         return result
         
-    def getOptionOnFuturesPrice():
+    def getOptionOnFuturesPrice(flag,f,x,k,r,t,sigma):
         result = None
-        
+        d1 = (math.log(f/x) + (math.pow(sigma,2)/2) * t)/(sigma * math.sqrt(t))
+        d2 = d1 - sigma * math.sqrt(t)
         return result
         
     def getCurrencyOptionPrice():
