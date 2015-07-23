@@ -5,7 +5,8 @@ import Distributions
 
 class VanillaOptionDistributionCalculator:
     
-    def getBlackScholesEquityOptionPrice(flag,s,x,k,r,t,sigma):
+    # Black-Scholes-Merton (1973) option pricing formula
+    def getBlackScholesEquityOptionPrice(flag,s,x,r,t,sigma):
         result = None
         d1 = (math.log(s/x) + (r + math.pow(sigma,2)/2) * t)/(sigma * math.sqrt(t))
         d2 = d1 - sigma * math.sqrt(t)
@@ -15,7 +16,7 @@ class VanillaOptionDistributionCalculator:
             result = (x * math.exp(-r * t) * cnd(-d2)) - (s * cnd(-d1))
         return result
         
-    def getStockIndexOptionPrice(flag,s,x,k,q,r,t,sigma):
+    def getStockIndexOptionPrice(flag,s,x,q,r,t,sigma):
         result = None
         d1 = (math.log(s/x) + (r - q + math.pow(sigma,2)/2) * t)/(sigma * math.sqrt(t))
         d2 = d1 - sigma * math.sqrt(t)
@@ -25,19 +26,35 @@ class VanillaOptionDistributionCalculator:
             result = (x*math.exp(-r*t)*cnd(-d2)) - (s*math.exp(-q*t)*cnd(-d1))
         return result
         
-    def getOptionOnFuturesPrice(flag,f,x,k,r,t,sigma):
-       result = None
-       
-       return result
-        
-    def getCurrencyOptionPrice():
+    def getOptionOnFuturePrice(flag,f,x,r,t,sigma):
         result = None
-        d1 = (math.log(f/x) + (math.pow(sigma,2)/2) * t)/(sigma * math.sqrt(t))
+        d1 = math.log(f/x) + (math.pow(sigma,2)/2) * t
         d2 = d1 - sigma * math.sqrt(t)
         if flag == 'c':
-            result = 0
-        elif flag = 'p':
-            ressult = 0
+            result = math.exp(-r*t) * ((f * cnd(d1) - (x * cnd(d2))))
+        elif flag == 'p':
+            result = math.exp(-r*t) * ((x * cnd(-d2) - (f * cnd(d1))))
+        return result
+        
+    def getMarginedOptionOnFuturesPrice(flag,f,x,r,t,sigma):
+       result = None
+       d1 = (math.log(f/x) + (math.pow(sigma,2)/2) * t)/(sigma*math.sqrt(t))
+       d2 = d1 - sigma*math.sqrt(t)
+       if flag == 'c':
+           result = (f * cnd(d1)) - (x * cnd(d2))
+       elif flag == 'p':
+           result = (x * cnd(-d2)) - (f * cnd(-d1))
+       return result
+      
+    # Garman-Kholhagan formula  
+    def getCurrencyOptionPrice(flag,s,x,r,rf,t,sigma):
+        result = None
+        d1 = (math.log(s/x) + (r - rf + math.pow(sigma,2)/2) * t)/(sigma * math.sqrt(t))
+        d2 = d1 - sigma * math.sqrt(t)
+        if flag == 'c':
+            result = (s * math.exp(-rf * t) * cnd(d1)) - (x * math.exp(-r * t) * cnd(d2))
+        elif flag == 'p':
+            result = (x * math.exp(-r * t) * cnd(-d2)) - (s * math.exp(-rf*t) * cnd(-d1))
         return result
         
     # Greeks implementations for equity and fx options
