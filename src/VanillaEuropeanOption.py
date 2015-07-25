@@ -5,35 +5,40 @@ import Distributions
 
 class VanillaEuropeanOption:
     
-    def __init__(self,flag,s,x,r,t,sigma):
+    def __init__(self,flag,s,x,r,b,t,sigma):
         self.flag = flag
         self.s = s
         self.x = x
         self.r = r
         self.t = t
         self.sigma = sigma
-        self.d1 = None
-        self.d2 = None
-        
-        self.d1 = (math.log(s/x) + (r + math.pow(sigma,2)/2) * t)/(sigma * math.sqrt(t))
+        self.d1 = (math.log(s/x) + (r - b + math.pow(sigma,2)/2) * t)/(sigma * math.sqrt(t))
         self.d2 = d1 - sigma * math.sqrt(t)
-        
+    
+    # Option price  
     def get_price():
         result = None
-        if self.flag == 'c'
-            result = 0
-        elif self.flag == 'p'
-            result = 0
+        if flag == 'c':
+            result = (s * math.exp(-b*T) * cnd(d1)) - (x * math.exp(-r * t) * cnd(d2))
+        elif flag == 'p':
+            result = (x * math.exp(-r * t) * cnd(-d2)) - (s * math.exp(-q*t) * cnd(-d1))
         return result
      
-    # Delta greeks   
+    # Delta greeks  
+    #
+    
+    # Delta, spot delta
     def get_delta():
         result = None
+        if flag == 'c':
+            result = math.exp((b-r)*t) * cnd(d1)
+        elif flag == 'p':
+            result = math.exp((b-r)*t) * (cnd(d1) - 1)
         return result
-        
+    
+    # DdeltaDvol, vanna
     def get_ddelta_dvol():
-        result = None
-        return result
+        return (-math.exp((b-r)*t) * d2 * ndf(d1))/sigma
         
     def get_ddelta_dtime():
         result = None
@@ -45,51 +50,54 @@ class VanillaEuropeanOption:
     
     def get_elasticity():
         result = None
+        if flag == 'c':
+            result = math.exp((b-r)*t) * cnd(d1) * s / get_price()
+        elif flag == 'p':
+            result = math.exp((b-r)*t) * (cnd(d1) - 1) * s / get_price()
         return result
     
     # Gamma greeks 
+    #
+    
+    # Gamma
     def get_gamma():
-        result = None
-        return result
+        return ndf(d1) * math.exp((b-r)*t)/(s * sigma * math.sqrt(t))
         
+    # Maximal gamma for asset price
+    def get_maximal_gamma_for_asset_price():
+        return x * (math.exp(-b - 3 * math.pow(sigma,2)/2) * t)
+    
+    # Maximal gamma for strike price
+    def get_maximal_gamma_for_strike_price():
+        return s * math.exp((b + math.pow(sigma,2)/2) * t)
+        
+    # Gamma percentage
+    def get_gammaP():
+        return ndf(d1) * math.exp((b-r)*t)/(100 * sigma * math.sqrt(t))
+      
+    # DgammaDvol, zomma  
     def get_dgamma_dvol():
-        result = None
-        return result
-        
-    def get_zomma():
-        result = None
-        return result
-        
+        return get_gamma() * (d1 * d2 - 1)/sigma
+    
+    # DgammaDspot, speed  
     def get_dgamma_dspot():
-        result = None
-        return result
-        
-    def get_speed():
-        result = None
-        return result
-        
+        return -get_gamma() * (1 + (d1/(sigma*math.sqrt(t))))/s 
+    
+    # DgammaDtime, color    
     def get_dgamma_dtime():
-        result = None
-        return result
-        
-    def get_color():
         result = None
         return result
     
     # Vega greeks  
     def get_vega():
-        result = None
-        return result
-        
+        return s * math.exp((b-r)*t) * ndf(d1) * math.exp(t)
+    
+    # VegaP for 10% change in volatility    
     def get_vegap():
-        result = None
-        return result
-        
+        return (sigma * s * math.exp((b-r)*t) * ndf(d1) * math.sqrt(t))/10
+     
+    # Vega leverage, elasticity   
     def get_vega_leverage():
-        result = None
-        return result
-        
-    def get_vega_elasticity():
         result = None
         return result
         
