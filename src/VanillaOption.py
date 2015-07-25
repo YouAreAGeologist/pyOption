@@ -20,10 +20,6 @@ class VanillaEuropeanOption:
         
     def get_price():
         result = None
-        if self.flag == 'c'
-            result = 0
-        elif self.flag == 'p'
-            result = 0
         return result
      
     # Delta greeks   
