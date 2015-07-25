@@ -57,5 +57,40 @@ class VanillaOptionDistributionCalculator:
             result = (x * math.exp(-r * t) * cnd(-d2)) - (s * math.exp(-rf*t) * cnd(-d1))
         return result
         
-    # Greeks implementations for equity and fx options
+    # BSM Greeks implementations for equity and fx options
+    #
+    
+    ## USE formulas in fomulas list rather than examples as some are futures
+    ## ..
+    
+    ## Add greeks to their own file
+    ## ..
+    
+    # delta
+    def getOptionDelta(flag,s,x,r,b,t,sigma):
+        result = None
+        d1 = (math.log(s/x) + (b + math.pow(sigma,2)/2) * t)/(sigma * math.sqrt(t))
+        if flag == 'c':
+            result = math.exp((b-r) * t) * cnd(d1)
+        elif flat == 'p':
+            result = math.exp((b-r) * t) * (cnd(d1) - 1)
+        return result
+        
+    #strike from delta
+    #..
+    
+    #gamma
+    def getOptionGamma(s,x,r,b,t,sigma):
+        d1 = (math.log(s/x) + (b + math.pow(sigma,2)/2) * t)/(sigma * math.sqrt(t))
+        return (ndf(d1) * math.exp((b-r) * t))/(s * sigma * math.sqrt(t))
+        
+    #maximal gamma
+    def getMaximalOptionGamma(x,b,t,sigma):#
+        return x * math.exp((-b - 3 * math.pow(sigma,2)/2) * t)
+        
+    #saddle gamma price and gamma at this point
+    #
+    
+    
+        
     

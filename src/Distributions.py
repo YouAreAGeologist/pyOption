@@ -34,6 +34,11 @@ class Distributions:
             
         return result
     
+    # REQUIRE INVERSE CND FOR STRIKE FROM DELTA CALCULATIONS
+    # IMPLEMENT..
+    
+    
+    
     # Bivariate normal density function
     @staticmethod
     def bndf(x,y,rho):
