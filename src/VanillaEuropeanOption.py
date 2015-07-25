@@ -98,47 +98,51 @@ class VanillaEuropeanOption:
      
     # Vega leverage, elasticity   
     def get_vega_leverage():
-        result = None
-        return result
-        
+        return get_vega() * sigma / get_price()
+     
+    #DvegaDvol, vomma   
     def get_dvega_dvol():
-        result = None
-        return result
-        
-    def get_vomma():
-        result = None
-        return result
-        
+        return get_vega() * (d1*d2/sigma)
+    
+    #DvommaDvol, ultima
     def get_dvomma_dvol():
         result = None
         return result
         
+    # DvegaDtime
     def get_dvega_dtime():
-        result = None
-        return result
-        
-    # Variance greeks
-    def get_variance_vega():
-        result = None
-        return result
-        
-    def get_ddelta_dvar():
-        result = None
-        return result
+        return get_vega() * (r - b + ((b*d1)/(sigma*math.sqrt(t))) - ((1 - d1*d2)/(2*t)))
     
     # Theta greeks
+    #
+    
+    # Option theta
     def get_theta():
         result = None
         return result 
     
     # Rho greeks
+    #
+    
+    # Option rho
     def get_rho():
         result = None
+        if flag == 'c':
+            result = r * x * math.exp(-r*t) * cnd(d2)
+        elif flag == 'p':
+            result = r * x * math.exp(-r*t) * cnd(-d2)
         return result
         
     # Probability greeks
+    #
+    
+    # In-the-money probability
     def get_in_the_money_probability():
         result = None
+        if flag == 'c':
+            result = cnd(d2)
+        elif flag == 'p':
+            result = cnd(-d2)
         return result
         
     def get_dzeta_dvol():
