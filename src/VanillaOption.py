@@ -37,6 +37,7 @@ class VanillaEuropeanOption:
         result = None
         return result
         
-    def get_rho:
+    def get_rho():
         result = None
         return result
+        
