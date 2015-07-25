@@ -144,16 +144,34 @@ class VanillaEuropeanOption:
         elif flag == 'p':
             result = cnd(-d2)
         return result
-        
+     
+    # DzetaDtime   
     def get_dzeta_dvol():
         result = None
+        if flag == 'c':
+            result = -ndf(d2) * d1/sigma
+        elif flag == 'p':
+            result = ndf(d2) * d1/sigma
         return result
-        
+    
+    # DzetaDtime
     def get_dzeta_dtime():
         result = None
+        if flag == 'c':
+            result = -ndf(d2) * ((b/(sigma * math.sqrt(t))) - (d1/(2 * t)))
+        elif flag == 'p':
+            result = ndf(d2) * ((b/(sigma * math.sqrt(t))) - (d1/(2 * t)))
         return result
         
+    # Probability of ever getting in the money
     def get_probability_of_ever_getting_in_the_money():
         result = None
-        return
+        mu = ((b - math.pow(sigma,2))/2)
+        lmd = math.sqrt(math.pow(mu,2) + (2*r/math.pow(sigma,2)))
+        z = math.log(x/s)/(sigma * math.sqrt(t)) * (lmb * sigma * math.sqrt(t))
+        if flag == 'c':
+            result = (math.pow(x/s,mu+lmd) * cnd(-z)) + (math.pow(x/s,mu-lmd) * cnd(-z + (2 * lmd * sigma * math.sqrt(t))))
+        elif flag == 'p':
+            result = (math.pow(x/s,mu+lmd) * cnd(z)) + (math.pow(x/s,mu-lmd) * cnd(z - (2 * lmd * sigma * math.sqrt(t))))
+        return result
         
