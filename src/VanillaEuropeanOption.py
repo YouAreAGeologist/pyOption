@@ -3,6 +3,8 @@
 import math
 import Distributions
 
+# Consider splitting vanilla option greeks off into separate classes
+
 class VanillaEuropeanOption:
     
     def __init__(self,flag,s,x,r,b,t,sigma):
@@ -39,15 +41,17 @@ class VanillaEuropeanOption:
     # DdeltaDvol, vanna
     def get_ddelta_dvol():
         return (-math.exp((b-r)*t) * d2 * ndf(d1))/sigma
-        
+    
+    # Ddeltatime, charm, delta bleed 
     def get_ddelta_dtime():
         result = None
-        return result
-        
-    def get_charm():
-        result = None
+        if flag == 'c':
+            result = math.exp((b-r)*t) * ((cnd(d1) * ((b/(sigma*math.sqrt(t))) - (d2/(2 * t))) + ((b-r) * cnd(d1))))
+        elif flag == 'p':
+            result = math.exp((b-r)*t) * ((cnd(d1) * ((b/(sigma*math.sqrt(t))) - (d2/(2 * t))) - ((b-r) * cnd(-d1)))) 
         return result
     
+    # Elasticity
     def get_elasticity():
         result = None
         if flag == 'c':
@@ -89,6 +93,9 @@ class VanillaEuropeanOption:
         return result
     
     # Vega greeks  
+    #
+    
+    # Vega
     def get_vega():
         return s * math.exp((b-r)*t) * ndf(d1) * math.exp(t)
     
@@ -100,11 +107,11 @@ class VanillaEuropeanOption:
     def get_vega_leverage():
         return get_vega() * sigma / get_price()
      
-    #DvegaDvol, vomma   
+    # DvegaDvol, vomma   
     def get_dvega_dvol():
         return get_vega() * (d1*d2/sigma)
     
-    #DvommaDvol, ultima
+    # DvommaDvol, ultima
     def get_dvomma_dvol():
         result = None
         return result
@@ -116,15 +123,19 @@ class VanillaEuropeanOption:
     # Theta greeks
     #
     
-    # Option theta
+    # Theta
     def get_theta():
         result = None
+        if flag == 'c':
+            result = - (((s * math.exp((b-r)*t) * ndf(d1) * sigma)/(2 * math.sqrt(t))) - ((b-r) * math.exp((b-r)*t) * cnd(d1)) - (r * x * math.exp(-r*t) * cnd(d2)))
+        elif flag == 'p':
+            result = - (((s * math.exp((b-r)*t) * ndf(d1) * sigma)/(2 * math.sqrt(t))) + ((b-r) * math.exp((b-r)*t) * cnd(-d1)) + (r * x * math.exp(-r*t) * cnd(-d2)))
         return result 
     
     # Rho greeks
     #
     
-    # Option rho
+    # Rho
     def get_rho():
         result = None
         if flag == 'c':
