@@ -113,8 +113,7 @@ class VanillaEuropeanOption:
     
     # DvommaDvol, ultima
     def get_dvomma_dvol():
-        result = None
-        return result
+        return get_dvega_dvol() * (1/sigma) * ((d1 * d2) - (d1/d2) - (d2/d1) - 1)
         
     # DvegaDtime
     def get_dvega_dtime():
@@ -144,6 +143,24 @@ class VanillaEuropeanOption:
             result = r * x * math.exp(-r*t) * cnd(-d2)
         return result
         
+    # Phi/Rho-2
+    def get_phi():
+        result = None
+        if flag == 'c':
+            result = -t * math.pow(s,(b-r)*t) * cnd(d1)
+        elif flag == 'p':
+            result = t * math.pow(s,(b-r)*t) * cnd(-d1)
+        return result
+    
+    # Carry Rho
+    def get_carry_rho():
+        result = None
+        if flag == 'c':
+            result = t * math.pow(s,(b-r)*t) * cnd(d1)
+        elif flag == 'p':
+            result = -t * math.pow(s,(b-r)*t) * cnd(-d1)
+        return result
+        
     # Probability greeks
     #
     
@@ -156,7 +173,7 @@ class VanillaEuropeanOption:
             result = cnd(-d2)
         return result
      
-    # DzetaDtime   
+    # DzetaDvol 
     def get_dzeta_dvol():
         result = None
         if flag == 'c':
