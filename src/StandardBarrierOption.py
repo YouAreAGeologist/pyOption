@@ -10,6 +10,13 @@ class StanadardBarrierOption:
         self.r = r
         self.t = t
         self.sigma = sigma
+        self.mu = (b - math.pow(sigma,2)/2)/math.pow(sigma)
+        self.lmd = math.sqrt(math.pow(mu,2) + (2 * r / math.pow(sigma,2)))
+        self.x1 = math.log(s/x)/(sigma * math.sqrt(t)) + ((1 + mu) * sigma * t)
+        self.x2 = math.log(s/h)/(sigma * math.sqrt(t)) + ((1 + mu) * sigma * t)
+        self.y1 = math.log(math.pow(h,2)/(s * x))/(sigma * math.sqrt(t)) + ((1 + mu) * sigma * math.sqrt(t))
+        self.y2 = math.log(h/s)/(sigma * math.sqrt(t)) + ((1 + mu) * sigma * math.sqrt(t))
+        self.z = (math.log(h/s)/(sigma * math.sqrt(t))) + (lmd * sigma * math.sqrt(t))
         self.eta = None
         self.phi = None
     
@@ -20,50 +27,72 @@ class StanadardBarrierOption:
         # document all barrier types up and in call etc
         #
         
-        mu = (b - math.pow(sigma,2)/2)/math.pow(sigma)
-        lmd = math.sqrt(math.pow(mu,2) + (2 * r / math.pow(sigma,2)))
-        x1 = math.log(s/x)/(sigma * math.sqrt(t)) + ((1 + mu) * sigma * t)
-        x2 = math.log(s/h)/(sigma * math.sqrt(t)) + ((1 + mu) * sigma * t)
-        y1 = math.log(math.pow(h,2)/(s * x))/(sigma * math.sqrt(t)) + ((1 + mu) * sigma * math.sqrt(t))
-        y2 = math.log(h/s)/(sigma * math.sqrt(t)) + ((1 + mu) * sigma * math.sqrt(t))
-        z = (math.log(h/s)/(sigma * math.sqrt(t))) + (lmd * sigma * math.sqrt(t))
-        
         if barrierType == "in":
             if flag == 'c':
                 if s > h:
                     phi = 1
                     eta = 1
-                    
+                    if x > h:
+                        result = __c() + __e()
+                    elif x < h:
+                        result = __a() - __b() + __d() + __e()
                 elif s < h:
                     phi = -1
                     eta = 1
+                    if x > h:
+                        result = __a() + __e()
+                    elif x < h:
+                        result = __b() - __c() + __d() + __e()
             elif flag == 'p':
                 if s > h:
                     phi = 1
                     eta = -1
+                    if x > h:
+                        result = __b() - __c() + __d() + __e() 
+                    elif x < h:
+                        result = __a() + __e()
                 elif s < h:
                     phi = -1
                     eta = -1
+                    if x > h:
+                        result = __a() - __b() + __d() + __e()
+                    elif x < h:
+                        result = __c() + __e()
         elif barrierType == "out":
             if flag == 'c':
                 if s > h:
                     phi = 1
                     eta = 1
+                    if x > h:
+                        result = __a() - __c() + __f()
+                    elif x < h:
+                        result = __b() - __d() + __f()
                 elif s < h:
                     phi = -1
                     eta = 1
+                    if x > h:
+                        result = __f()
+                    elif x < h:
+                        result = __a() - __b() + __c() - __d() + __f()
             elif flag == 'p':
                 if s > h:
                     phi = 1
                     eta = -1
+                    if x > h:
+                        result = __a() - __b() + __c() - __d() + __f()
+                    elif x < h:
+                        result = __f()
                 elif s < h:
                     phi = -1
                     eta = -1
-        
+                    if x > h:
+                        result = __b() - __d() + __f()
+                    elif x < h:
+                        result = __a() - __c() + __f()
         return result
         
     def __a():
-        return (phi * s * math.exp((b-r)*t) * cnd(phi * x1))
+        return (phi * s * math.exp((b-r)*t) * cnd(phi * x1)) - (phi * x * math.exp(-r*t))
         
     def __b():
         return 0
