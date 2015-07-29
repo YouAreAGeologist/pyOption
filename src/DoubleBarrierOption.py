@@ -17,8 +17,10 @@ class DoubleBarrierOption:
     def get_price():
         result = None
         mu1 = ((2 * (b - delta2 - (n * (delta1 - delta2))))/math.pow(sigma,2)) + 1
-        mu2 = 2n * (delta1 - delta2)/math.pow(sigma,2)
+        mu2 = 2 * n * (delta1 - delta2)/math.pow(sigma,2)
         mu3 = ((2 * (b - delta2 + (n * (delta1 - delta2))))/math.pow(sigma,2)) + 1
+        sum1 = 0
+        sum2 = 0
         
         if flag == 'c':
             f = u * math.exp(delta1 * t)
@@ -29,9 +31,11 @@ class DoubleBarrierOption:
             
             # Approximate infinite series conversion using -5 to +5
             for n in range(-5,5):
-                result += 0
+                sum1 += (math.pow(math.pow(u,n)/math.pow(l,n),mu1) * math.pow(l/s,mu2) * ((cnd(d1)-cnd(d2)) - math.pow(math.pow(l,n+1)/(math.pow(u,n) * s),mu3) * (cnd(d3) - cnd(d4)))) 
+                sum2 += (math.pow(math.pow(u,n)/math.pow(l,n),mu1 - 2) * math.pow(l/s,mu2) * ((cnd(d1 - sigma * math.sqrt(t))-cnd(d2 - sigma * math.sqrt(t))) - math.pow(math.pow(l,n+1)/(math.pow(u,n) * s),mu3) * (cnd(d3 - sigma * math.sqrt(t)) - cnd(d4 - sigma * math.sqrt(t)))))
             
-            result = 0
+            sum1 = sum1 * s * math.exp((b-r)*t)
+            sum2 = sum2 * x * math.exp(r*t)
             
         elif flag == 'p':
             e = l * math.exp(delta2 * t)
@@ -42,8 +46,10 @@ class DoubleBarrierOption:
             
             # Approximate infinite series conversion using -5 to +5
             for n in range(-5,5):
-                result += 0
-            
-            result = 0
+                sum1 += (math.pow(math.pow(u,n)/math.pow(l,n),mu1 - 2) * math.pow(l/s,mu2) * ((cnd(y1 - sigma * math.sqrt(t))-cnd(y2 - sigma * math.sqrt(t))) - math.pow(math.pow(l,n+1)/(math.pow(u,n) * s),mu3 - 2) * (cnd(y3 - sigma * math.sqrt(t)) - cnd(y4 - sigma * math.sqrt(t))))) 
+                sum2 += (math.pow(math.pow(u,n)/math.pow(l,n),mu1) * math.pow(l/s,mu2) * ((cnd(y1)-cnd(y2) - math.pow(math.pow(l,n+1)/(math.pow(u,n) * s),mu3) * (cnd(y3) - cnd(y4))))
         
-        return result
+            sum1 = sum1 * x * math.exp(r*t)
+            sum2 = sum2 * s * math.exp((b-r)*t)
+        
+        return sum1 + sum2
