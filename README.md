@@ -1,5 +1,7 @@
 # pyOption
-Option pricing in Python
+pyOption is an option pricing library written in Python by George Marklow.
+
+Please find the API reference here: https://github.com/gmarklow87/pyOption/wiki
 
 I wish to express thanks to the following sources which have helped build my library:
 
