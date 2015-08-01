@@ -15,4 +15,12 @@ class Volatility:
         
         return math.sqrt((sum1/(n-1)) - ((math.pow(close_prices[i]/close_prices[i-1],2)/(n * (n-1)))))
         
-    
+    @staticmethod
+    def get_high_low_volatility(low_prices,high_prices):
+        
+        n = len(low_prices)
+        sum1 = 0
+        for i in (1,n):
+            sum1 += high_prices(i)/low_prices(i)
+        
+        return sum1/(2 * n * math.sqrt(math.log(2)))
