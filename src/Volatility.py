@@ -27,6 +27,7 @@ class Volatility:
         return sum1/(2 * n * math.sqrt(math.log(2)))
         
     # Garman and Klass (1980)
+    @staticmethod
     def get_high_low_close_volatility(close_prices,low_prices,high_prices):
         
         n = len(close_prices)
