@@ -1,5 +1,5 @@
 import math
-from mathematics.Distribution import ndf, cnd
+from mathematics.src.Distribution import ndf, cnd
 
 
 class VanillaEuropeanOption:
