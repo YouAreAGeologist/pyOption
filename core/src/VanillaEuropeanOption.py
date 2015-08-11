@@ -4,30 +4,30 @@ from mathematics.src.Distribution import ndf, cnd
 
 class VanillaEuropeanOption:
     def __init__(self, flag, s, x, r, b, t, sigma):
-        self.flag = flag
-        self.s = s
-        self.x = x
-        self.r = r
-        self.b = b
-        self.t = t
-        self.sigma = sigma
-        self.d1 = (math.log(s / x) + (r - b + math.pow(sigma, 2) / 2) * t) / (sigma * math.sqrt(t))
-        self.d2 = self.d1 - sigma * math.sqrt(t)
+        self.__flag = flag
+        self.__s = s
+        self.__x = x
+        self.__r = r
+        self.__b = b
+        self.__t = t
+        self.__sigma = sigma
+        self.__d1 = (math.log(s / x) + (r - b + math.pow(sigma, 2) / 2) * t) / (sigma * math.sqrt(t))
+        self.__d2 = self.__d1 - sigma * math.sqrt(t)
 
     # Option price
     def get_price(self, result=None):
-        if self.flag == 'c':
-            result = (self.s * math.exp(-self.b * self.t) * cnd(self.d1)) - (self.x * math.exp(-self.r * self.t) * cnd(self.d2))
-        elif self.flag == 'p':
-            result = (self.x * math.exp(-self.r * self.t) * cnd(-self.d2)) - (self.s * math.exp(-self.q * self.t) * cnd(-self.d1))
+        if self.__flag == 'c':
+            result = (self.__s * math.exp(-self.__b * self.__t) * cnd(self.__d1)) - (self.__x * math.exp(-self.__r * self.__t) * cnd(self.__d2))
+        elif self.__flag == 'p':
+            result = (self.__x * math.exp(-self.__r * self.__t) * cnd(-self.__d2)) - (self.__s * math.exp(-self.q * self.__t) * cnd(-self.__d1))
         return result
 
     # Delta (spot delta)
     def get_delta(self, result=None):
-        if self.flag == 'c':
-            result = math.exp((self.b - self.r) * self.t) * cnd(self.d1)
-        elif self.flag == 'p':
-            result = math.exp((self.b - self.r) * self.t) * (cnd(self.d1) - 1)
+        if self.__flag == 'c':
+            result = math.exp((self.__b - self.__r) * self.__t) * cnd(self.__d1)
+        elif self.__flag == 'p':
+            result = math.exp((self.__b - self.__r) * self.__t) * (cnd(self.__d1) - 1)
         return result
 
     # # DdeltaDvol, vanna
@@ -59,7 +59,7 @@ class VanillaEuropeanOption:
     #
     # Gamma
     def get_gamma(self):
-        return ndf(self.d1) * math.exp((self.b - self.r) * self.t) / (self.s * self.sigma * math.sqrt(self.t))
+        return ndf(self.__d1) * math.exp((self.__b - self.__r) * self.__t) / (self.__s * self.__sigma * math.sqrt(self.__t))
     #
     # # Maximal gamma for asset price
     # def get_maximal_gamma_for_asset_price():
@@ -93,7 +93,7 @@ class VanillaEuropeanOption:
 
     # # Vega
     def get_vega(self):
-        return self.s * math.exp((self.b - self.r) * self.t) * ndf(self.d1) * math.exp(self.t)
+        return self.__s * math.exp((self.__b - self.__r) * self.__t) * ndf(self.__d1) * math.exp(self.__t)
     #
     # # VegaP for 10% change in volatility
     # def get_vegap():
@@ -120,12 +120,12 @@ class VanillaEuropeanOption:
 
     # Theta
     def get_theta(self, result=None):
-        if self.flag == 'c':
-            result = - (((self.s * math.exp((self.b - self.r) * self.t) * ndf(self.d1) * self.sigma) / (2 * math.sqrt(self.t))) - (
-            (self.b - self.r) * math.exp((self.b - self.r) * self.t) * cnd(self.d1)) - (self.r * self.x * math.exp(-self.r * self.t) * cnd(self.d2)))
-        elif self.flag == 'p':
-            result = - (((self.s * math.exp((self.b - self.r) * self.t) * ndf(self.d1) * self.sigma) / (2 * math.sqrt(self.t))) + (
-            (self.b - self.r) * math.exp((self.b - self.r) * self.t) * cnd(-self.d1)) + (self.r * self.x * math.exp(-self.r * self.t) * cnd(-self.d2)))
+        if self.__flag == 'c':
+            result = - (((self.__s * math.exp((self.__b - self.__r) * self.__t) * ndf(self.__d1) * self.__sigma) / (2 * math.sqrt(self.__t))) - (
+            (self.__b - self.__r) * math.exp((self.__b - self.__r) * self.__t) * cnd(self.__d1)) - (self.__r * self.__x * math.exp(-self.__r * self.__t) * cnd(self.__d2)))
+        elif self.__flag == 'p':
+            result = - (((self.__s * math.exp((self.__b - self.__r) * self.__t) * ndf(self.__d1) * self.__sigma) / (2 * math.sqrt(self.__t))) + (
+            (self.__b - self.__r) * math.exp((self.__b - self.__r) * self.__t) * cnd(-self.__d1)) + (self.__r * self.__x * math.exp(-self.__r * self.__t) * cnd(-self.__d2)))
         return result
 
     #     # Rho greeks
@@ -134,10 +134,10 @@ class VanillaEuropeanOption:
     #
     # Rho
     def get_rho(self, result=None):
-        if self.flag == 'c':
-            result = self.r * self.x * math.exp(-self.r * self.t) * cnd(self.d2)
-        elif self.flag == 'p':
-            result = self.r * self.x * math.exp(-self.r * self.t) * cnd(-self.d2)
+        if self.__flag == 'c':
+            result = self.__r * self.__x * math.exp(-self.__r * self.__t) * cnd(self.__d2)
+        elif self.__flag == 'p':
+            result = self.__r * self.__x * math.exp(-self.__r * self.__t) * cnd(-self.__d2)
         return result
 
     # # Phi/Rho-2
