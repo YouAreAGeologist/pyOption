@@ -1,6 +1,6 @@
 import unittest
 import math
-from core.src.VanillaEuropeanOption import VanillaEuropeanOption
+from core.src.vanilla_european_option import VanillaEuropeanOption
 from mathematics.src.distribution import ndf, cnd
 
 class VanillaEuropeanOptionTest(unittest.TestCase):
