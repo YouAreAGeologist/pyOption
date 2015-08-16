@@ -17,7 +17,8 @@ class AssetOrNothingOption():
         self.__d = (math.log(s/x) + (b - math.pow(sigma, 2)/2) * t) / (sigma * math.sqrt(t))
         
         
-    def get_price(self, result=None):
+    def get_price(self):
+        result=None
         if self.__flag == 'c':
             result = self.__k * math.exp(-self.__r * self.__t) * cnd(self.__d)
         elif self.__flag == 'p':

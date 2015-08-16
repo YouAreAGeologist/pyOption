@@ -17,7 +17,8 @@ class VanillaEuropeanOption:
         self.__d2 = self.__d1 - sigma * math.sqrt(t)
 
     # Option price
-    def get_price(self, result=None):
+    def get_price(self):
+        result=None
         if self.__flag == 'c':
             result = (self.__s * math.exp(-self.__b * self.__t) * cnd(self.__d1)) - (self.__x * math.exp(-self.__r * self.__t) * cnd(self.__d2))
         elif self.__flag == 'p':
@@ -25,7 +26,8 @@ class VanillaEuropeanOption:
         return result
 
     # Delta (spot delta)
-    def get_delta(self, result=None):
+    def get_delta(self):
+        result=None
         if self.__flag == 'c':
             result = math.exp((self.__b - self.__r) * self.__t) * cnd(self.__d1)
         elif self.__flag == 'p':
@@ -121,7 +123,8 @@ class VanillaEuropeanOption:
     # #
 
     # Theta
-    def get_theta(self, result=None):
+    def get_theta(self):
+        result=None
         if self.__flag == 'c':
             result = - (((self.__s * math.exp((self.__b - self.__r) * self.__t) * ndf(self.__d1) * self.__sigma) / (2 * math.sqrt(self.__t))) - (
             (self.__b - self.__r) * math.exp((self.__b - self.__r) * self.__t) * cnd(self.__d1)) - (self.__r * self.__x * math.exp(-self.__r * self.__t) * cnd(self.__d2)))
@@ -135,7 +138,8 @@ class VanillaEuropeanOption:
     # #
     #
     # Rho
-    def get_rho(self, result=None):
+    def get_rho(self):
+        result=None
         if self.__flag == 'c':
             result = self.__r * self.__x * math.exp(-self.__r * self.__t) * cnd(self.__d2)
         elif self.__flag == 'p':
