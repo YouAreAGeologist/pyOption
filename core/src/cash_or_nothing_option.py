@@ -2,7 +2,7 @@ import math
 from mathematics.src.distribution import cnd
 
 
-class AssetOrNothingOption():
+class CashOrNothingOption():
 
 
     def __init__(self, flag, s, x, k, r, b, t, sigma):
