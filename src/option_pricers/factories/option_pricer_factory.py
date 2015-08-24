@@ -1,3 +1,4 @@
+from src.option_pricers.types.vanilla_european_option_pricer import VanillaEuropeanOptionPricer
 from src.option_pricers.types.asset_or_nothing_option_pricer import AssetOrNothingOptionPricer
 
 
@@ -13,6 +14,8 @@ class OptionPricerFactory:
 
             if option_type == 'asset_or_nothing':
                 calculator = AssetOrNothingOptionPricer(params)
+            elif option_type == 'vanilla_european':
+                calculator = VanillaEuropeanOptionPricer(params)
         except Exception:
             '''log exception'''
 
