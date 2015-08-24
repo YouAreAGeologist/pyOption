@@ -4,4 +4,4 @@ from src.greeks.calculators.numerical_greeks_calculator import NumericalGreeksCa
 class GreeksFactory:
     @staticmethod
     def get_calculator(params, greeks):
-        return  NumericalGreeksCalculator(params, greeks)
+        return NumericalGreeksCalculator(params, greeks)

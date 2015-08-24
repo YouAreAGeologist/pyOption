@@ -1,9 +1,9 @@
-from src.options.calculators.asset_or_nothing_option_calculator import *
+from src.option_pricers.types.asset_or_nothing_option_pricer import AssetOrNothingOptionPricer
 
 
-class OptionCalculatorFactory:
+class OptionPricerFactory:
     @staticmethod
-    def get_calculator(params, greeks):
+    def get_pricer(params, greeks):
         calculator = None
         try:
             if 'option_type' in params:
@@ -12,7 +12,7 @@ class OptionCalculatorFactory:
                 raise NameError('option_type parameter is not in params dictionary.')
 
             if option_type == 'asset_or_nothing':
-                calculator = AssetOrNothingOptionCalculator(params, greeks)
+                calculator = AssetOrNothingOptionPricer(params)
         except Exception:
             '''log exception'''
 
