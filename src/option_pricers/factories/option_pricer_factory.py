@@ -1,9 +1,12 @@
 from src.option_pricers.types.vanilla_european_option_pricer import VanillaEuropeanOptionPricer
-from src.option_pricers.types.cash_or_nothing_option import CashOrNothingOptionPricer
+from src.option_pricers.types.cash_or_nothing_option_pricer import CashOrNothingOptionPricer
 from src.option_pricers.types.asset_or_nothing_option_pricer import AssetOrNothingOptionPricer
-from src.option_pricers.types.binary_single_barrier_option import BinarySingleBarrierOptionPricer
+from src.option_pricers.types.binary_single_barrier_option_pricer import BinarySingleBarrierOptionPricer
 from src.option_pricers.types.variable_purchase_option_pricer import VariablePurchaseOptionPricer
-
+from src.option_pricers.types.executive_stock_option_pricer import ExecutiveStockOptionPricer
+from src.option_pricers.types.standard_power_option_pricer import StandardPowerOptionPricer
+from src.option_pricers.types.capped_power_option_pricer import CappedPowerOptionPricer
+from src.option_pricers.types.powered_option_pricer import PoweredOptionPricer
 
 class OptionPricerFactory:
     @staticmethod
@@ -19,22 +22,14 @@ class OptionPricerFactory:
                 calculator = VanillaEuropeanOptionPricer(params)
             elif option_type == 'variable_purchase':
                 calculator = VariablePurchaseOptionPricer(params)
-            # elif option_type == 'executive_stock':
-            #     calculator = None
-            # elif option_type == 'moneyness':
-            #     calculator = None
-            # elif option_type == 'power_contract':
-            #     calculator = None
-            # elif option_type == 'standard_power':
-            #     calculator = None
-            # elif option_type == 'capped-power':
-            #     calculator = None
-            # elif option_type == 'powered':
-            #     calculator = None
-            # elif option_type == 'log_s':
-            #     calculator = None
-            # elif option_type == 'log':
-            #     calculator = None
+            elif option_type == 'executive_stock':
+                calculator = ExecutiveStockOptionPricer(params)
+            elif option_type == 'standard_power':
+                calculator = StandardPowerOptionPricer(params)
+            elif option_type == 'capped_power':
+                calculator = CappedPowerOptionPricer(params)
+            elif option_type == 'powered':
+                calculator = PoweredOptionPricer(params)
             # elif option_type == 'forward_start':
             #     calculator = None
             # elif option_type == 'fade_in':
