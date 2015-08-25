@@ -1,0 +1,2 @@
+class ArithmeticRateOptionPricer:
+    pass

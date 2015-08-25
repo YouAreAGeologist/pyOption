@@ -17,4 +17,3 @@ class OptionCalculator:
         results['price'] = self.__option_pricer.get_price()
         results['greeks'] = self.__greeks_calculator.get_values()
         self.results = results
-
