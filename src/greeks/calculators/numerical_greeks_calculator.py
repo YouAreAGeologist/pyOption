@@ -4,92 +4,93 @@ import src.options.types.option
 
 
 class NumericalGreeksCalculator:
-    def __init__(self, params, greeks, ds = 0.01, dr = 0.01, db = 0.01, dt = 0.00001, dsigma= 0.01):
+    def __init__(self, params, ds = 0.01, dr = 0.01, db = 0.01, dt = 0.00001, dsigma= 0.01):
         self.__params = params
-        self.__greeks = greeks
         self.__ds = ds
         self.__dr = dr
         self.__db = db
         self.__dt = dt
+        self.__dsigma = dsigma
 
     def get_values(self):
-        calculatedGreeks = {}
+        calculated_greeks = {}
+        required_greeks = self.__params['greeks']
 
-        if ('delta' in self.__greeks):
+        if ('delta' in required_greeks):
             p1 = deepcopy(self.__params)
             p2 = deepcopy(self.__params)
-            p1['s'] = p1['s'] + self.__ds
-            p2['s'] = p2['s'] - self.__ds
-            option1 = src.options.types.option.Option(p1, None)
-            option2 = src.options.types.option.Option(p2, None)
-            calculatedGreeks['delta'] = (option1.calculator.get_price() - option2.calculator.get_price()) / (2 * self.__ds)
+            p1['option']['s'] = p1['option']['s'] + self.__ds
+            p2['option']['s'] = p2['option']['s'] - self.__ds
+            option1 = src.options.types.option.Option(p1)
+            option2 = src.options.types.option.Option(p2)
+            calculated_greeks['delta'] = (option1.calculator.get_price() - option2.calculator.get_price()) / (2 * self.__ds)
 
-        if ('gamma' in self.__greeks):
+        if ('gamma' in required_greeks):
             p1 = deepcopy(self.__params)
             p2 = deepcopy(self.__params)
-            p1['s'] = p1['s'] + self.__ds
-            p2['s'] = p2['s'] - self.__ds
-            option1 = src.options.types.option.Option(p1, None)
-            option2 = src.options.types.option.Option(self.__params, None)
-            option3 = src.options.types.option.Option(p2, None)
-            calculatedGreeks['gamma'] = (option1.calculator.get_price() - (2 * option2.calculator.get_price()) + option3.calculator.get_price()) / math.pow(self.__ds, 2)
+            p1['option']['s'] = p1['option']['s'] + self.__ds
+            p2['option']['s'] = p2['option']['s'] - self.__ds
+            option1 = src.options.types.option.Option(p1)
+            option2 = src.options.types.option.Option(self.__params)
+            option3 = src.options.types.option.Option(p2)
+            calculated_greeks['gamma'] = (option1.calculator.get_price() - (2 * option2.calculator.get_price()) + option3.calculator.get_price()) / math.pow(self.__ds, 2)
 
-        if ('theta' in self.__greeks):
+        if ('theta' in required_greeks):
             p1 = deepcopy(self.__params)
             p2 = deepcopy(self.__params)
-            p1['t'] = p1['t'] + self.__dt
-            p2['t'] = p2['t'] - self.__dt
-            option1 = src.options.types.option.Option(p1, None)
-            option2 = src.options.types.option.Option(p2, None)
-            calculatedGreeks['theta'] = (option1.calculator.get_price() - option2.calculator.get_price()) / self.__dt
+            p1['option']['t'] = p1['option']['t'] + self.__dt
+            p2['option']['t'] = p2['option']['t'] - self.__dt
+            option1 = src.options.types.option.Option(p1)
+            option2 = src.options.types.option.Option(p2)
+            calculated_greeks['theta'] = (option1.calculator.get_price() - option2.calculator.get_price()) / self.__dt
 
-        if ('vega' in self.__greeks):
+        if ('vega' in required_greeks):
             p1 = deepcopy(self.__params)
             p2 = deepcopy(self.__params)
-            p1['sigma'] = p1['sigma'] + self.__dsigma
-            p2['sigma'] = p2['sigma'] - self.__dsigma
-            option1 = src.options.types.option.Option(p1, None)
-            option2 = src.options.types.option.Option(p2, None)
-            calculatedGreeks['vega'] = (option1.calculator.get_price() - option2.calculator.get_price()) / 2
+            p1['option']['sigma'] = p1['option']['sigma'] + self.__dsigma
+            p2['option']['sigma'] = p2['option']['sigma'] - self.__dsigma
+            option1 = src.options.types.option.Option(p1)
+            option2 = src.options.types.option.Option(p2)
+            calculated_greeks['vega'] = (option1.calculator.get_price() - option2.calculator.get_price()) / 2
 
-        if ('rho' in self.__greeks):
+        if ('rho' in required_greeks):
             p1 = deepcopy(self.__params)
             p2 = deepcopy(self.__params)
-            p1['r'] = p1['r'] + self.__dr
-            p1['b'] = p1['b'] + self.__db
-            p2['r'] = p2['r'] - self.__dr
-            p2['b'] = p2['b'] - self.__db
-            option1 = src.options.types.option.Option(p1, None)
-            option2 = src.options.types.option.Option(p2, None)
-            calculatedGreeks['rho'] = (option1.calculator.get_price() - option2.calculator.get_price()) / 2
+            p1['option']['r'] = p1['option']['r'] + self.__dr
+            p1['option']['b'] = p1['option']['b'] + self.__db
+            p2['option']['r'] = p2['option']['r'] - self.__dr
+            p2['option']['b'] = p2['option']['b'] - self.__db
+            option1 = src.options.types.option.Option(p1)
+            option2 = src.options.types.option.Option(p2)
+            calculated_greeks['rho'] = (option1.calculator.get_price() - option2.calculator.get_price()) / 2
 
-        if ('rho_futures' in self.__greeks):
+        if ('rho_futures' in required_greeks):
             p1 = deepcopy(self.__params)
             p2 = deepcopy(self.__params)
-            p1['r'] = p1['r'] + self.__dr
-            p2['r'] = p2['r'] - self.__dr
-            option1 = src.options.types.option.Option(p1, None)
-            option2 = src.options.types.option.Option(p2, None)
-            calculatedGreeks['rho_futures'] = (option1.calculator.get_price() - option2.calculator.get_price()) / 2
+            p1['option']['r'] = p1['option']['r'] + self.__dr
+            p2['option']['r'] = p2['option']['r'] - self.__dr
+            option1 = src.options.types.option.Option(p1)
+            option2 = src.options.types.option.Option(p2)
+            calculated_greeks['rho_futures'] = (option1.calculator.get_price() - option2.calculator.get_price()) / 2
 
 
-        if ('rho_2' in self.__greeks):
+        if ('rho_2' in required_greeks):
             p1 = deepcopy(self.__params)
             p2 = deepcopy(self.__params)
-            p1['b'] = p1['b'] - self.__db
-            p2['b'] = p2['b'] + self.__db
-            option1 = src.options.types.option.Option(p1, None)
-            option2 = src.options.types.option.Option(p2, None)
-            calculatedGreeks['rho_2'] = (option1.calculator.get_price() - option2.calculator.get_price()) / 2
+            p1['option']['b'] = p1['option']['b'] - self.__db
+            p2['option']['b'] = p2['option']['b'] + self.__db
+            option1 = src.options.types.option.Option(p1)
+            option2 = src.options.types.option.Option(p2)
+            calculated_greeks['rho_2'] = (option1.calculator.get_price() - option2.calculator.get_price()) / 2
 
 
-        if ('rho_carry' in self.__greeks):
+        if ('rho_carry' in required_greeks):
             p1 = deepcopy(self.__params)
             p2 = deepcopy(self.__params)
-            p1['b'] = p1['b'] + self.__db
-            p2['b'] = p2['b'] - self.__db
-            option1 = src.options.types.option.Option(p1, None)
-            option2 = src.options.types.option.Option(p2, None)
-            calculatedGreeks['rho_carry'] = (option1.calculator.get_price() - option2.calculator.get_price()) / 2
+            p1['option']['b'] = p1['option']['b'] + self.__db
+            p2['option']['b'] = p2['option']['b'] - self.__db
+            option1 = src.options.types.option.Option(p1)
+            option2 = src.options.types.option.Option(p2)
+            calculated_greeks['rho_carry'] = (option1.calculator.get_price() - option2.calculator.get_price()) / 2
 
-        return calculatedGreeks
+        return calculated_greeks

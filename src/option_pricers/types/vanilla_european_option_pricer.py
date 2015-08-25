@@ -8,7 +8,7 @@ class VanillaEuropeanOptionPricer:
 
     def get_price(self):
         result=None
-        params = self.__params
+        params = self.__params['option']
         flag, s, x, r, b, t, sigma = params['flag'], params['s'], params['x'], params['r'], params['b'], params['t'], params['sigma']
         d1 = (math.log(s / x) + (r - b + math.pow(sigma, 2) / 2) * t) / (sigma * math.sqrt(t))
         d2 = d1 - sigma * math.sqrt(t)

@@ -4,11 +4,11 @@ from src.option_pricers.types.asset_or_nothing_option_pricer import AssetOrNothi
 
 class OptionPricerFactory:
     @staticmethod
-    def get_pricer(params, greeks):
+    def get_pricer(params):
         calculator = None
         try:
-            if 'option_type' in params:
-                option_type = params['option_type']
+            if 'option_type' in params['option']:
+                option_type = params['option']['option_type']
             else:
                 raise NameError('option_type parameter is not in params dictionary.')
 
