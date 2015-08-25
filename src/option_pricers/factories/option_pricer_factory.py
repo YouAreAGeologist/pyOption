@@ -2,6 +2,7 @@ from src.option_pricers.types.vanilla_european_option_pricer import VanillaEurop
 from src.option_pricers.types.cash_or_nothing_option import CashOrNothingOptionPricer
 from src.option_pricers.types.asset_or_nothing_option_pricer import AssetOrNothingOptionPricer
 from src.option_pricers.types.binary_single_barrier_option import BinarySingleBarrierOptionPricer
+from src.option_pricers.types.variable_purchase_option_pricer import VariablePurchaseOptionPricer
 
 
 class OptionPricerFactory:
@@ -16,10 +17,8 @@ class OptionPricerFactory:
 
             if option_type == 'vanilla_european':
                 calculator = VanillaEuropeanOptionPricer(params)
-            # if option_type == 'fx_european':
-            #     calculator = None
-            # elif option_type == 'variable_purchase':
-            #     calculator = None
+            elif option_type == 'variable_purchase':
+                calculator = VariablePurchaseOptionPricer(params)
             # elif option_type == 'executive_stock':
             #     calculator = None
             # elif option_type == 'moneyness':
