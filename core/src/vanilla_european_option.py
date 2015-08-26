@@ -3,8 +3,6 @@ from mathematics.src.distribution import ndf, cnd
 
 
 class VanillaEuropeanOption:
-
-
     def __init__(self, flag, s, x, r, b, t, sigma):
         self.__flag = flag
         self.__s = s

@@ -1,7 +1,6 @@
-# Double barrier option pricing
+import math
 
 class DoubleBarrierOption:
-    
     def __init__(self,flag,s,x,u,l,t,r,b,sigma,delta1,delta2):
         self.s = s
         self.x = x
@@ -14,7 +13,7 @@ class DoubleBarrierOption:
         self.delta1 = delta1
         self.delta2 = delta2
         
-    def get_price():
+    def get_price(self):
         result = None
         mu1 = ((2 * (b - delta2 - (n * (delta1 - delta2))))/math.pow(sigma,2)) + 1
         mu2 = 2 * n * (delta1 - delta2)/math.pow(sigma,2)

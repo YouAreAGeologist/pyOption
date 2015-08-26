@@ -1,7 +1,6 @@
 # Standard Barrier Option pricing
 
 class StanadardBarrierOption:
-
     def __init__(self,flag,barrierType,s,x,k,r,b,t,sigma):
         self.flag = flag
         self.barrierType = barrierType

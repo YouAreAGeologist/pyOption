@@ -12,12 +12,16 @@ from src.option_pricers.types.simple_chooser_option_pricer import SimpleChooserO
 from src.option_pricers.types.forward_start_option_pricer import ForwardStartOptionPricer
 from src.option_pricers.types.binary_double_barrier_option_pricer import BinaryDoubleBarrierOptionPricer
 from src.option_pricers.types.geometric_average_rate_option_pricer import GeometricAverageRateOptionPricer
-from src.option_pricers.types.arithmetic_rate_option_pricer import ArithmeticRateOptionPricer
-from src.option_pricers.types.discrete_arithmetic_average_rate_option_pricer import DiscreteArithmeticAverageRate
 from src.option_pricers.types.supershare_option_pricer import SupershareOptionPricer
 from src.option_pricers.types.gap_option_pricer import GapOptionPricer
 from src.option_pricers.types.single_barrier_option_pricer import SingleBarrierOptionPricer
 from src.option_pricers.types.double_barrier_option_pricer import DoubleBarrierOptionPricer
+from src.option_pricers.types.floating_strike_lookback_option_pricer import FloatingStrikeLookbackOptionPricer
+from src.option_pricers.types.fixed_strike_lookback_option_pricer import FixedStrikeLookbackOptionPricer
+from src.option_pricers.types.partial_time_floating_strike_option_pricer import PartialTimeFloatingStrikeLookbackOptionPricer
+from src.option_pricers.types.partial_time_fixed_strike_lookback_option_pricer import PartialTimeFixedStrikeLookbackOptionPricer
+from src.option_pricers.types.mirror_option_pricer import MirrorOptionPricer
+from src.option_pricers.types.fade_in_option_pricer import FadeInOptionPricer
 
 
 class OptionPricerFactory:
@@ -44,10 +48,8 @@ class OptionPricerFactory:
                 calculator = PoweredOptionPricer(params)
             elif option_type == 'forward_start':
                 calculator = ForwardStartOptionPricer(params)
-            # elif option_type == 'fade_in':
-            #     calculator = None
-            # elif option_type == 'ratchet':
-            #     calculator = None
+            elif option_type == 'fade_in':
+                calculator = FadeInOptionPricer(params)
             # elif option_type == 'reset_strike_1':
             #     calculator = None
             # elif option_type == 'reset_strike_2':
@@ -58,18 +60,18 @@ class OptionPricerFactory:
                 calculator = SimpleChooserOptionPricer(params)
             # elif option_type == 'complex_chooser':
             #     calculator = None
-            # elif option_type == 'floating_strike_lookback':
-            #     calculator = None
-            # elif option_type == 'fixed_strike_lookback':
-            #     calculator = None
-            # elif option_type == 'partial_time_floating_strike':
-            #     calculator = None
-            # elif option_type == 'partial_time_floating_strike':
-            #     calculator = None
+            elif option_type == 'floating_strike_lookback':
+                calculator = FloatingStrikeLookbackOptionPricer(params)
+            elif option_type == 'fixed_strike_lookback':
+                calculator = FixedStrikeLookbackOptionPricer(params)
+            elif option_type == 'partial_time_floating_strike':
+                calculator = PartialTimeFloatingStrikeLookbackOptionPricer(params)
+            elif option_type == 'partial_time_floating_strike':
+                calculator = PartialTimeFixedStrikeLookbackOptionPricer(params)
             # elif option_type == 'extreme_spread':
             #     calculator = None
-            # elif option_type == 'mirror':
-            #     calculator = None
+            elif option_type == 'mirror':
+                calculator = MirrorOptionPricer(params)
             elif option_type == 'single_barrier':
                 calculator = SingleBarrierOptionPricer(params)
             # elif option_type == 'single_american_barrier':
@@ -98,11 +100,8 @@ class OptionPricerFactory:
                 calculator = BinaryDoubleBarrierOptionPricer(params)
             elif option_type == 'geometric_average_rate':
                 calculator = GeometricAverageRateOptionPricer(params)
-            elif option_type == 'arithmetic_average_rate':
-                calculator = ArithmeticRateOptionPricer(params)
-            elif option_type == 'discrete_arithmetic_average_rate':
-                calculator = DiscreteArithmeticAverageRate(params)
-
+            else:
+                '''exception!'''
 
         except Exception:
             '''log exception'''

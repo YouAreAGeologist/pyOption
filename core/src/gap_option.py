@@ -3,8 +3,6 @@ from mathematics.src.distribution import cnd
 
 
 class GapOption:
-
-
     def __init__(self, flag, s, x1, x2, r, b, t, sigma):
         self.__flag = flag
         self.__s = s
