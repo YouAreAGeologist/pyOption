@@ -1,23 +1,9 @@
-from src.options.types.option import Option
+from src.options.types.vanilla_european_option import VanillaEuropeanOption
+from src.greeks.calculators.numerical_greeks_calculator import NumericalGreeksCalculator
 
-params = {
-    'option': {
-        'option_type': 'vanilla_european',
-        'flag': 'call',
-        's': 120,
-        'x': 120,
-        'r': 0.1,
-        'b': 0.05,
-        't': 0.5,
-        'sigma': 0.25
-    },
-    'greeks': (
-        'delta',
-        'gamma',
-        'theta'
-    )
-}
 
-option = Option(params)
-option.calculator.get_values()
-print(option)
+option = VanillaEuropeanOption('call', 100.0, 95.0, 0.1, 0.05, 0.5, 0.2)
+print(option.get_value())
+
+greeks = NumericalGreeksCalculator(option)
+greeks.get_values(('delta', 'gamma'))
