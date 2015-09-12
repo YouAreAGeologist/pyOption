@@ -1,4 +1,4 @@
-from src.options.types.vanilla_european_option import VanillaEuropeanOption
+from src.options.european.vanilla_european_option import VanillaEuropeanOption
 from src.greeks.calculators.numerical_greeks_calculator import NumericalGreeksCalculator
 
 

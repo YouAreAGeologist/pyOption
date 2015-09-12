@@ -1,6 +1,5 @@
 import math
 from copy import deepcopy
-import src.options.types.option_base
 
 
 class NumericalGreeksCalculator:

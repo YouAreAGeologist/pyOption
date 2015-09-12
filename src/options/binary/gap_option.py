@@ -1,6 +1,6 @@
-import math
-from src.options.types.option_base import OptionBase
-from src.mathematics.distributions.cumulative_normal_distribution import N
+from src.options.option_base import OptionBase
+
+** Build option class inheritance trees i.e. OptionBase -> BinaryOptionBase -> GapOption
 
 
 class GapOption(OptionBase):

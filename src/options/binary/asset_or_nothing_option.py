@@ -1,5 +1,6 @@
 import math
-from src.options.types.option_base import OptionBase
+
+from src.options.option_base import OptionBase
 from src.mathematics.distributions.cumulative_normal_distribution import N
 
 
