@@ -2,7 +2,7 @@ import math
 from src.mathematics.distributions.cumulative_normal_distribution import N
 
 
-class Vasicek_Model:
+class VasicekModel:
     def __init__(self, flag, f, x, t, T, tau, r, kappa, theta, sigma):
         self.flag = flag
         self.x = x
