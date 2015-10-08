@@ -1,7 +1,7 @@
 import math
-from src.options.option_base import OptionBase
-from src.mathematics.distributions.cumulative_normal_distribution import N
-from src.mathematics.distributions.cumulative_bivariate_normal_distribution import M
+from options.option_base import OptionBase
+from mathematics.distributions.cumulative_normal_distribution import N
+from mathematics.distributions.cumulative_bivariate_normal_distribution import M
 
 
 class PartialTimeFloatingStrikeLookbackOption(OptionBase):

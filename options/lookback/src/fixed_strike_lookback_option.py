@@ -1,6 +1,6 @@
 import math
-from src.options.option_base import OptionBase
-from src.mathematics.distributions.cumulative_normal_distribution import N
+from options.option_base import OptionBase
+from mathematics.distributions.cumulative_normal_distribution import N
 
 
 class FixedStrikeLookbackOption(OptionBase):

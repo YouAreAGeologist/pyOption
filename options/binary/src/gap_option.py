@@ -1,7 +1,5 @@
 from src.options.option_base import OptionBase
 
-** Build option class inheritance trees i.e. OptionBase -> BinaryOptionBase -> GapOption
-
 
 class GapOption(OptionBase):
     def __init__(self, flag, s, x, r, b, t, sigma):
