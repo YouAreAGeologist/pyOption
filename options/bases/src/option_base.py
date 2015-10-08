@@ -1,6 +1,4 @@
 from abc import ABCMeta, abstractmethod
-import src.config as config
-import logging
 
 class OptionBase(object):
     __metaclass__ = ABCMeta

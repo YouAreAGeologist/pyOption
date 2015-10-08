@@ -1,7 +1,7 @@
 import math
 
-from src.options.option_base import OptionBase
-from src.mathematics.distributions.cumulative_normal_distribution import N
+from options.bases.src.option_base import OptionBase
+from mathematics.distributions.src.cumulative_normal_distribution import N
 
 
 class VanillaEuropeanOption(OptionBase):
