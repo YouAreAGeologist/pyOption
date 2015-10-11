@@ -1,7 +1,6 @@
 import math
-
-from src.options.option_base import OptionBase
-from src.mathematics.distributions.cumulative_normal_distribution import N
+from options.bases.src.option_base import OptionBase
+from mathematics.distributions.src.cumulative_normal_distribution import N
 
 
 class BinarySingleBarrierOption(OptionBase):
@@ -36,13 +35,13 @@ class BinarySingleBarrierOption(OptionBase):
         b4 = lambda eta: self.k * math.exp(-self.r * self.t) * math.pow(self.h/self.s, 2 * mu) * N((eta * y2) - (eta * self.sigma * math.sqrt(self.t)))
         a5 = lambda eta: self.k * (math.pow(self.h/self.s, mu + lmd) * N(eta * z) + math.pow(self.h/self.s, mu - lmd) * N((eta * z) - (2 * eta * lmd * self.sigma * math.sqrt(self.t))))
 
-        if self.flag == 'down-and-in cash-at-hit-or-nothing':
+        if self.flag == 'down_and_in_cash_at_hit_or_nothing':
             result = a5(1)
-        elif self.flag == 'up-and-in cash-at-hit-or-nothing':
+        elif self.flag == 'up_and_in_cash_at_hit_or_nothing':
             result = a5(-1)
-        elif self.flag == 'down-and-in asset-at-hit-or-nothing':
+        elif self.flag == 'down_and_in_asset_at_hit_or_nothing':
             result = a5(1)
-        elif self.flag == 'up-and-in asset-at-hit-or-nothing':
+        elif self.flag == 'up_and_in_asset_at_hit_or_nothing':
             result = a5(-1)
         elif self.flag == 'down-and-in cash-at-expiration-or-nothing':
             result = b2(-1) + b4(1)

@@ -1,7 +1,6 @@
 import math
-
-from src.options.option_base import OptionBase
-from src.mathematics.distributions.cumulative_normal_distribution import N
+from options.bases.src.option_base import OptionBase
+from mathematics.distributions.src.cumulative_normal_distribution import N
 
 
 class CashOrNothingOption(OptionBase):
@@ -22,6 +21,6 @@ class CashOrNothingOption(OptionBase):
         if self.flag == 'call':
             result = self.k * math.exp(-self.r * self.t) * N(d)
         elif self.flag == 'put':
-            result = self.k * math.exp(-self.r * self.t) * N(d)
+            result = self.k * math.exp(-self.r * self.t) * N(-d)
         return result
 

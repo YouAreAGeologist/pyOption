@@ -16,6 +16,10 @@ class VanillaEuropeanOption(OptionBase):
         self.sigma = sigma
 
     def get_value(self):
+        """Documentation for a function.
+
+        More details.
+        """
         result=None
         d1 = (math.log(self.s / self.x) + (self.r - self.b + math.pow(self.sigma, 2) / 2) * self.t) / (self.sigma * math.sqrt(self.t))
         d2 = d1 - self.sigma * math.sqrt(self.t)

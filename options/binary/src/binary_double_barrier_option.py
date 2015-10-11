@@ -1,4 +1,4 @@
-from src.options.option_base import OptionBase
+from options.bases.src.option_base import OptionBase
 
 
 class BinaryDoubleBarrierOption(OptionBase):

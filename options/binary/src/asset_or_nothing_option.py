@@ -1,7 +1,7 @@
 import math
 
-from src.options.option_base import OptionBase
-from src.mathematics.distributions.cumulative_normal_distribution import N
+from options.bases.src.option_base import OptionBase
+from mathematics.distributions.src.cumulative_normal_distribution import N
 
 
 class AssetOrNothingOption(OptionBase):
@@ -17,7 +17,7 @@ class AssetOrNothingOption(OptionBase):
 
     def get_value(self):
         result = None
-        d = (math.log(self.s / self.x) + (self.s + math.pow(self.sigma, 2)/2) * self.t) / (self.sigma * math.sqrt(self.t))
+        d = (math.log(self.s / self.x) + (self.b + math.pow(self.sigma, 2) * 0.5) * self.t) / (self.sigma * math.sqrt(self.t))
         if self.flag == 'call':
             result = self.s * math.exp((self.b - self.r) * self.t) * N(d)
         elif self.flag == 'put':
